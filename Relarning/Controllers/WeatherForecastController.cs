@@ -1,9 +1,14 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Relarning.Authentications;
+using Relarning.Enum;
 
 namespace Relarning.Controllers
 {
     [ApiController]
     [Route("[controller]")]
+    [Authorize]
+    [Authorization(Permission.Read)]
     public class WeatherForecastController : ControllerBase
     {
         private static readonly string[] Summaries =
@@ -19,8 +24,7 @@ namespace Relarning.Controllers
                 Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
                 TemperatureC = Random.Shared.Next(-20, 55),
                 Summary = Summaries[Random.Shared.Next(Summaries.Length)]
-            })
-            .ToArray();
+            }).ToList();
         }
     }
 }

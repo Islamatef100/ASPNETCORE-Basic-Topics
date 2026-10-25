@@ -11,7 +11,7 @@ namespace Relarning.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ValuesController(JwtOptions JwtOptions) : ControllerBase
+    public class UserController(JwtOptions JwtOptions) : ControllerBase
     {
         [HttpPost("sign-in")]
         public async Task<ActionResult> SignIn(SignInDTO request)
@@ -25,9 +25,10 @@ namespace Relarning.Controllers
             {
                 Issuer = JwtOptions.Issuere,
                 Audience = JwtOptions.Audiance,
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF32.GetBytes(JwtOptions.SigningKey)), SecurityAlgorithms.HmacSha256),
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(JwtOptions.SigningKey)), SecurityAlgorithms.HmacSha256),
                 Subject = new ClaimsIdentity(new Claim[] {
                     new Claim(ClaimTypes.Name,request.UserName),
+                    new (ClaimTypes.NameIdentifier,"1"),
                     new Claim("Email","ia1900@fayoum.edu.eg"),
                }),
             };
